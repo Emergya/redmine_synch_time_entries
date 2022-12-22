@@ -18,7 +18,7 @@ class SynchRelationImport < Import
 			end
 		elsif data_type == 'Project'
 			Rails.cache.fetch(:source_projects_import, :expires_in => (minutes_cache.to_i).minutes) do
-				SynchTimeEntries::Source.get_projects_identifier.sort_by {|_key, value| value}.to_h
+				SynchTimeEntries::Source.get_projects_identifier.merge(SynchTimeEntries::Source.get_filed_projects_identifier).sort_by {|_key, value| value}.to_h
 			end
 		end
 	end
