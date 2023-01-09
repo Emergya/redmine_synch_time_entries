@@ -23,6 +23,9 @@ en:
     label_offset_days: Offset days
     label_minutes_cache: Data cache expire time (minutes)
     label_delete_before_synch: Delete data before synchronising
+    label_synch_mode: Synchronisation mode
+    window_synch_mode: Window
+    date_range_synch_mode: Date range
 
     label_new_issue_relation: New issues relation
     label_new_project_relation: New projects relation
