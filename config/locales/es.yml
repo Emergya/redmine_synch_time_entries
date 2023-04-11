@@ -22,6 +22,7 @@ es:
     label_other_data: Otros datos
     label_offset_days: Días de actualización
     label_minutes_cache: Duración de caché de datos (minutos)
+    label_fallback_activity: Actividad alternativa
     label_delete_before_synch: Borrar datos antes de la sincronización
     label_synch_mode: Modo de sincronización
     window_synch_mode: Ventana

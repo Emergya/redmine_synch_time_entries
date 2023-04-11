@@ -32,6 +32,12 @@ namespace :synch do
 				# Obtenemos usuario de destino
 				te[:user] = User.find(user_relation.target_id)
 
+				#Obtenemos actividad de destino
+				activity = TimeEntryActivity.active.find_by_id(te[:activity_id])
+				if activity.blank?
+					te[:activity_id] = Setting.plugin_redmine_synch_time_entries['fallback_activity'] || TimeEntryActivity.shared.active.first.id
+				end
+
 				# Obtenemos petición de destino (y proyecto si es relevante)
 				if issue_relation.present?
 					te[:issue_id] = issue_relation.target_id
@@ -54,8 +60,13 @@ namespace :synch do
 					end
 				else
 					# No está registrada la imputación => creamos nueva imputación
-					result_create << (time_entry = TimeEntry.create(te))
-					SynchTimeEntryRelation.create({source_id: te[:id], target_id: time_entry.id, last_update: te[:updated_on], spent_on: te[:spent_on]})
+					time_entry = TimeEntry.create(te)
+					if time_entry.id.present?
+						result_create << time_entry
+						SynchTimeEntryRelation.create({source_id: te[:id], target_id: time_entry.id, last_update: te[:updated_on], spent_on: te[:spent_on]})
+					else
+						puts time_entry.errors
+					end
 				end
 			end
 		end
